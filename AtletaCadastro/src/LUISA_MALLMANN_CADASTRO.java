@@ -3,6 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
 /**
  *
  * @author 20231sg.inf_i0004
@@ -100,6 +107,14 @@ public class LUISA_MALLMANN_CADASTRO extends javax.swing.JFrame {
         botaoIdade.setFont(new java.awt.Font("Reem Kufi", 0, 18)); // NOI18N
         botaoIdade.setForeground(new java.awt.Color(255, 255, 204));
         botaoIdade.setText("Idade");
+        botaoIdade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoIdadeActionPerformed(evt);
+            }
+        });
+
+
+
 
         jLabel9.setFont(new java.awt.Font("Reem Kufi", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(102, 0, 0));
@@ -396,15 +411,15 @@ public class LUISA_MALLMANN_CADASTRO extends javax.swing.JFrame {
         if(femi.isSelected() || masc.isSelected()) {
             imc = calcula.calculaIMC(p,a);
             if ((femi.isSelected() && imc < 19.1) || (masc.isSelected() && imc < 20.7)) {
-                textoResultado = "Você está abaixo do peso.";
+                textoResultado = "Está abaixo do peso.";
             } else if ((femi.isSelected() && imc > 19.1 && imc < 25.8) || (masc.isSelected() && imc > 20.7 && imc < 26.4)) {
-                textoResultado = "Você está no peso normal.";
+                textoResultado = "Está no peso normal.";
             } else if ((femi.isSelected() && imc > 25.8 && imc < 27.3) || (masc.isSelected() && imc > 26.4 && imc < 27.8)) {
-                textoResultado = "Você está marginalmente acima do peso.";
+                textoResultado = "Está marginalmente acima do peso.";
             } else if ((femi.isSelected() && imc > 27.3 && imc < 32.3) || (masc.isSelected() && imc > 27.8 && imc < 31.1)) {
-                textoResultado = "Você está acima do peso ideal.";
+                textoResultado = "Está acima do peso ideal.";
             } else if ((femi.isSelected() && imc > 32.3) || (masc.isSelected() && imc > 31.1)) {
-                textoResultado = "Você está obeso.";
+                textoResultado = "Está obeso.";
             }
         } else {
             textoResultado = "Selecione um sexo";
@@ -422,27 +437,41 @@ public class LUISA_MALLMANN_CADASTRO extends javax.swing.JFrame {
         // TODO add your handling code here:
     }
 
-    private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    private void botaoIdadeActionPerformed(java.awt.event.ActionEvent evt) {
+        String textoNascimento = dataNac.getText();
+
+        LocalDate hoje = LocalDate.now();
+        DateTimeFormatter formato1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate dataNascimento = LocalDate.parse(textoNascimento, formato1);
+
+        Period idadePessoa = Period.between(dataNascimento, hoje);
+
+        idade.setText(String.valueOf(idadePessoa.getYears()));
     }
 
     private void gravarBotaoActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        String nomePessoa = nome.getText();
+        String idadePessoa = idade.getText();
+        String cidadePessoa = cidade.getSelectedItem().toString();
+        String modalidadePessoa = modalidade.getSelectedItem().toString();
+        String pesoPessoa = peso.getText();
+        String alturaPessoa = altura.getText();
+        String imcPessoa = imcResultado.getText();
+        String imcPessoaTexto = imcTexto.getText();
+
+        resultadoTexto.setText(nomePessoa+" tem "+idadePessoa+" anos, mora na cidade de "+cidadePessoa+". Pratica "+modalidadePessoa+", pesa "+pesoPessoa+"quilos, mede "+alturaPessoa+" metros e seu IMC é de "+imcPessoa+", o que indica que "+imcPessoaTexto);
+    }
+
+    private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {
+        resultadoTexto.setText("");
     }
 
     private void botaoSairActionPerformed(java.awt.event.ActionEvent evt) {
         System.exit(0);
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
