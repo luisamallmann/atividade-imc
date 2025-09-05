@@ -77,7 +77,7 @@ public class LUISA_MALLMANN_CADASTRO extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Reem Kufi", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel2.setText("Nome:");
+        jLabel2.setText("Nome*:");
 
         jLabel3.setFont(new java.awt.Font("Reem Kufi", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 0, 0));
@@ -85,7 +85,7 @@ public class LUISA_MALLMANN_CADASTRO extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Reem Kufi", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel4.setText("Cidade:");
+        jLabel4.setText("Cidade*:");
 
         jLabel5.setFont(new java.awt.Font("Reem Kufi", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(102, 0, 0));
@@ -97,11 +97,11 @@ public class LUISA_MALLMANN_CADASTRO extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Reem Kufi", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel7.setText("Modalidade:");
+        jLabel7.setText("Modalidade*:");
 
         jLabel8.setFont(new java.awt.Font("Reem Kufi", 0, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel8.setText("Data de nascimento:");
+        jLabel8.setText("Data de nascimento*:");
 
         botaoIdade.setBackground(new java.awt.Color(102, 0, 0));
         botaoIdade.setFont(new java.awt.Font("Reem Kufi", 0, 18)); // NOI18N
@@ -118,15 +118,15 @@ public class LUISA_MALLMANN_CADASTRO extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Reem Kufi", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel9.setText("Sexo:");
+        jLabel9.setText("Sexo*:");
 
         jLabel10.setFont(new java.awt.Font("Reem Kufi", 0, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel10.setText("Peso:");
+        jLabel10.setText("Peso*:");
 
         jLabel11.setFont(new java.awt.Font("Reem Kufi", 0, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel11.setText("Altura:");
+        jLabel11.setText("Altura*:");
 
         botaoIMC.setBackground(new java.awt.Color(102, 0, 0));
         botaoIMC.setFont(new java.awt.Font("Reem Kufi", 0, 18)); // NOI18N
@@ -398,36 +398,40 @@ public class LUISA_MALLMANN_CADASTRO extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void botaoIMCActionPerformed(java.awt.event.ActionEvent evt) {
-        float a = 0;
-        float p = 0;
-        float imc = 0;
-        String textoResultado = "";
+        try {
+            float a = Float.parseFloat(altura.getText());
+            float p = Float.parseFloat(peso.getText());
+            float imc = 0;
+            String textoResultado = "";
 
-        LUISA_MALLMANN_CALCULA_AUXILIAR calcula = new LUISA_MALLMANN_CALCULA_AUXILIAR();
+            LUISA_MALLMANN_CALCULA_AUXILIAR calcula = new LUISA_MALLMANN_CALCULA_AUXILIAR();
 
-        a = Float.parseFloat(altura.getText());
-        p = Float.parseFloat(peso.getText());
-
-        if(femi.isSelected() || masc.isSelected()) {
-            imc = calcula.calculaIMC(p,a);
-            if ((femi.isSelected() && imc < 19.1) || (masc.isSelected() && imc < 20.7)) {
-                textoResultado = "Está abaixo do peso.";
-            } else if ((femi.isSelected() && imc > 19.1 && imc < 25.8) || (masc.isSelected() && imc > 20.7 && imc < 26.4)) {
-                textoResultado = "Está no peso normal.";
-            } else if ((femi.isSelected() && imc > 25.8 && imc < 27.3) || (masc.isSelected() && imc > 26.4 && imc < 27.8)) {
-                textoResultado = "Está marginalmente acima do peso.";
-            } else if ((femi.isSelected() && imc > 27.3 && imc < 32.3) || (masc.isSelected() && imc > 27.8 && imc < 31.1)) {
-                textoResultado = "Está acima do peso ideal.";
-            } else if ((femi.isSelected() && imc > 32.3) || (masc.isSelected() && imc > 31.1)) {
-                textoResultado = "Está obeso.";
+            if(femi.isSelected() || masc.isSelected()) {
+                imc = calcula.calculaIMC(p,a);
+                // lógica de classificação do IMC
+                if ((femi.isSelected() && imc < 19.1) || (masc.isSelected() && imc < 20.7)) {
+                    textoResultado = "Está abaixo do peso.";
+                } else if ((femi.isSelected() && imc > 19.1 && imc < 25.8) || (masc.isSelected() && imc > 20.7 && imc < 26.4)) {
+                    textoResultado = "Está no peso normal.";
+                } else if ((femi.isSelected() && imc > 25.8 && imc < 27.3) || (masc.isSelected() && imc > 26.4 && imc < 27.8)) {
+                    textoResultado = "Está marginalmente acima do peso.";
+                } else if ((femi.isSelected() && imc > 27.3 && imc < 32.3) || (masc.isSelected() && imc > 27.8 && imc < 31.1)) {
+                    textoResultado = "Está acima do peso ideal.";
+                } else if ((femi.isSelected() && imc > 32.3) || (masc.isSelected() && imc > 31.1)) {
+                    textoResultado = "Está obeso.";
+                }
+            } else {
+                textoResultado = "Selecione um sexo";
             }
-        } else {
-            textoResultado = "Selecione um sexo";
-        }
 
-        imcTexto.setText(textoResultado);
-        imcResultado.setText(Float.toString(imc));
+            imcTexto.setText(textoResultado);
+            imcResultado.setText(Float.toString(imc));
+        } catch (Exception e) {
+            imcTexto.setText("Digite valores válidos para altura e peso!");
+            imcResultado.setText("");
+        }
     }
+
 
     private void cpfActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
@@ -438,29 +442,47 @@ public class LUISA_MALLMANN_CADASTRO extends javax.swing.JFrame {
     }
 
     private void botaoIdadeActionPerformed(java.awt.event.ActionEvent evt) {
-        String textoNascimento = dataNac.getText();
+        try {
+            if (dataNac.getText().isEmpty() || dataNac.getText().contains(" ")) {
+                idade.setText("Preencha a data!");
+                return;
+            }
 
-        LocalDate hoje = LocalDate.now();
-        DateTimeFormatter formato1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dataNascimento = LocalDate.parse(textoNascimento, formato1);
+            String textoNascimento = dataNac.getText();
 
-        Period idadePessoa = Period.between(dataNascimento, hoje);
+            LocalDate hoje = LocalDate.now();
+            DateTimeFormatter formato1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate dataNascimento = LocalDate.parse(textoNascimento, formato1);
 
-        idade.setText(String.valueOf(idadePessoa.getYears()));
+            Period idadePessoa = Period.between(dataNascimento, hoje);
+
+            idade.setText(String.valueOf(idadePessoa.getYears()));
+        } catch (Exception e) {
+            idade.setText("Data inválida.");
+        }
     }
 
     private void gravarBotaoActionPerformed(java.awt.event.ActionEvent evt) {
-        String nomePessoa = nome.getText();
-        String idadePessoa = idade.getText();
-        String cidadePessoa = cidade.getSelectedItem().toString();
-        String modalidadePessoa = modalidade.getSelectedItem().toString();
-        String pesoPessoa = peso.getText();
-        String alturaPessoa = altura.getText();
-        String imcPessoa = imcResultado.getText();
-        String imcPessoaTexto = imcTexto.getText();
+        try {
+            if(nome.getText().isEmpty()||nome.getText().contains(" ")||idade.getText().isEmpty()||idade.getText().contains(" ")||peso.getText().isEmpty()||altura.getText().isEmpty()||imcResultado.getText().isEmpty()){
+                resultadoTexto.setText("Preencha todos os campos obrigatórios.");
+                return;
+            }
+            String nomePessoa = nome.getText();
+            String idadePessoa = idade.getText();
+            String cidadePessoa = cidade.getSelectedItem().toString();
+            String modalidadePessoa = modalidade.getSelectedItem().toString();
+            String pesoPessoa = peso.getText();
+            String alturaPessoa = altura.getText();
+            String imcPessoa = imcResultado.getText();
+            String imcPessoaTexto = imcTexto.getText();
 
-        resultadoTexto.setText(nomePessoa+" tem "+idadePessoa+" anos, mora na cidade de "+cidadePessoa+". Pratica "+modalidadePessoa+", pesa "+pesoPessoa+"quilos, mede "+alturaPessoa+" metros e seu IMC é de "+imcPessoa+", o que indica que "+imcPessoaTexto);
+            resultadoTexto.setText(nomePessoa+" tem "+idadePessoa+" anos, mora na cidade de "+cidadePessoa+". Pratica "+modalidadePessoa+", pesa "+pesoPessoa+" quilos, mede "+alturaPessoa+" metros e seu IMC é de "+imcPessoa+", o que indica que "+imcPessoaTexto);
+        } catch (Exception e) {
+            resultadoTexto.setText("Erro ao gravar os dados!");
+        }
     }
+
 
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {
         resultadoTexto.setText("");
